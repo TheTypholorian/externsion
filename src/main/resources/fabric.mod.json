@@ -1,0 +1,37 @@
+{
+	"schemaVersion": 1,
+	"id": "externsion",
+	"version": "${version}",
+	"name": "Externsion",
+	"description": "Extend your base's externals (and internals) with this building mod, adding currently 0 things!",
+	"authors": [
+		"The Typhothanian"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/externsion/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.typho.externsion.Externsion"
+		],
+		"fabric-datagen": [
+			"net.typho.externsion.ExternsionDataGenerator"
+		]
+	},
+	"mixins": [
+		"externsion.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.14",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
