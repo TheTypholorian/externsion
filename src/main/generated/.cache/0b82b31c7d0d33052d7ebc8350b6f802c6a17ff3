@@ -1,3 +1,5 @@
-// 1.20.1	2025-06-30T07:30:52.912132	Externsion/Tags for minecraft:block
-cc3b1915d0a9e8786005d46ed0f6a7304beba129 data\minecraft\tags\blocks\walls.json
+// 1.20.1	2025-06-30T10:07:30.5910761	Externsion/Tags for minecraft:block
+b5fd937bef0f8a862703cc5837b78fee763e92ca data\minecraft\tags\blocks\stairs.json
+c19211cd8faf758ea1b58445c08a52137f37ea41 data\minecraft\tags\blocks\slabs.json
+e85090a42d1207d0a8a4db145ed9571a65382083 data\minecraft\tags\blocks\walls.json
 1c4121a12be981c284904224a43a867971ca15bb data\minecraft\tags\blocks\mineable\pickaxe.json

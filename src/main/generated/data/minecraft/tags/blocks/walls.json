@@ -1,6 +1,10 @@
 {
   "replace": false,
   "values": [
-    "externsion:stone_wall"
+    "externsion:stone_wall",
+    "externsion:smooth_stone_wall",
+    "externsion:quartz_wall",
+    "externsion:quartz_brick_wall",
+    "externsion:smooth_quartz_wall"
   ]
 }

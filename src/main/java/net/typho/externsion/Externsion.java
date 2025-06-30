@@ -1,7 +1,6 @@
 package net.typho.externsion;
 
 import net.fabricmc.api.ModInitializer;
-
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -169,20 +168,28 @@ public class Externsion implements ModInitializer {
 
 	public static final BlockSet SMOOTH_STONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, new Identifier("smooth_stone"))
 			.setSolid(Blocks.SMOOTH_STONE)
-			.setSlab(Blocks.SMOOTH_STONE_SLAB);
+			.setStairs(block("smooth_stone_stairs", new StairsBlock(Blocks.SMOOTH_STONE.getDefaultState(), AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE).solid())))
+			.setSlab(Blocks.SMOOTH_STONE_SLAB)
+			.setWall(block("smooth_stone_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_STONE).solid())));
 
 	public static final BlockSet QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, new Identifier("quartz"))
 			.setSolid(Blocks.QUARTZ_BLOCK)
 			.setPillar(Blocks.QUARTZ_PILLAR)
-			.setSlab(Blocks.QUARTZ_SLAB);
+			.setStairs(Blocks.QUARTZ_STAIRS)
+			.setSlab(Blocks.QUARTZ_SLAB)
+			.setWall(block("quartz_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.QUARTZ_BLOCK).solid())));
 
 	public static final BlockSet QUARTZ_BRICKS_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, new Identifier("quartz_bricks"))
-			.setSolid(Blocks.QUARTZ_BRICKS);
+			.setSolid(Blocks.QUARTZ_BRICKS)
+			.setStairs(block("quartz_brick_stairs", new StairsBlock(Blocks.QUARTZ_BRICKS.getDefaultState(), AbstractBlock.Settings.copy(Blocks.QUARTZ_BRICKS).solid())))
+			.setSlab(block("quartz_brick_slab", new SlabBlock(AbstractBlock.Settings.copy(Blocks.QUARTZ_BRICKS).solid())))
+			.setWall(block("quartz_brick_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.QUARTZ_BRICKS).solid())));
 
 	public static final BlockSet SMOOTH_QUARTZ_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, new Identifier("smooth_quartz"))
 			.setSolid(Blocks.SMOOTH_QUARTZ)
 			.setStairs(Blocks.SMOOTH_QUARTZ_STAIRS)
-			.setSlab(Blocks.SMOOTH_QUARTZ_SLAB);
+			.setSlab(Blocks.SMOOTH_QUARTZ_SLAB)
+			.setWall(block("smooth_quartz_wall", new WallBlock(AbstractBlock.Settings.copy(Blocks.SMOOTH_QUARTZ).solid())));
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
@@ -199,6 +206,9 @@ public class Externsion implements ModInitializer {
 					entries.addAfter(MANGROVE_BLOCK_SET.solid.asItem(), MANGROVE_BLOCK_SET.chiseled);
 					entries.addAfter(CHERRY_BLOCK_SET.solid.asItem(), CHERRY_BLOCK_SET.chiseled);
 					entries.addAfter(STONE_BLOCK_SET.slab.asItem(), STONE_BLOCK_SET.wall);
+					entries.addAfter(QUARTZ_BLOCK_SET.slab.asItem(), QUARTZ_BLOCK_SET.wall);
+					entries.addAfter(QUARTZ_BRICKS_BLOCK_SET.solid.asItem(), QUARTZ_BRICKS_BLOCK_SET.stairs, QUARTZ_BRICKS_BLOCK_SET.slab, QUARTZ_BRICKS_BLOCK_SET.wall);
+					entries.addAfter(SMOOTH_QUARTZ_BLOCK_SET.slab.asItem(), SMOOTH_QUARTZ_BLOCK_SET.wall);
 				});
 		HandledScreens.register(KilnBlock.SCREEN_HANDLER_TYPE, KilnBlock.Screen::new);
 		LOGGER.info(Arrays.toString(RecipeBookCategory.values()));

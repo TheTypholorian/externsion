@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "externsion:smooth_stone_stairs",
+    "minecraft:quartz_stairs",
+    "externsion:quartz_brick_stairs"
+  ]
+}

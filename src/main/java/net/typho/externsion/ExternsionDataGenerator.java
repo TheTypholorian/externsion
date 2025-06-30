@@ -8,22 +8,16 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
 import net.minecraft.data.client.BlockStateModelGenerator;
 import net.minecraft.data.client.ItemModelGenerator;
-import net.minecraft.data.client.Models;
 import net.minecraft.data.server.recipe.RecipeJsonProvider;
 import net.minecraft.data.server.recipe.ShapedRecipeJsonBuilder;
 import net.minecraft.item.ItemConvertible;
-import net.minecraft.recipe.RecipeSerializer;
 import net.minecraft.recipe.book.RecipeCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.Identifier;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
@@ -60,6 +54,21 @@ public class ExternsionDataGenerator implements DataGeneratorEntrypoint {
 
 			BlockStateModelGenerator.BlockTexturePool stonePool = gen.registerCubeAllModelTexturePool(Externsion.STONE_BLOCK_SET.solid);
 			stonePool.wall(Externsion.STONE_BLOCK_SET.wall);
+
+			BlockStateModelGenerator.BlockTexturePool smoothStonePool = gen.registerCubeAllModelTexturePool(Externsion.SMOOTH_STONE_BLOCK_SET.solid);
+			smoothStonePool.stairs(Externsion.SMOOTH_STONE_BLOCK_SET.stairs);
+			// no datagen for this wall due to custom textures
+			//smoothStonePool.wall(Externsion.SMOOTH_STONE_BLOCK_SET.wall);
+
+			// no datagen for quartz walls due to separate top/side/bottom textures
+
+			BlockStateModelGenerator.BlockTexturePool quartzBricksPool = gen.registerCubeAllModelTexturePool(Externsion.QUARTZ_BRICKS_BLOCK_SET.solid);
+			quartzBricksPool.stairs(Externsion.QUARTZ_BRICKS_BLOCK_SET.stairs);
+			quartzBricksPool.slab(Externsion.QUARTZ_BRICKS_BLOCK_SET.slab);
+			quartzBricksPool.wall(Externsion.QUARTZ_BRICKS_BLOCK_SET.wall);
+
+			BlockStateModelGenerator.BlockTexturePool smoothQuartzPool = gen.registerCubeAllModelTexturePool(Externsion.SMOOTH_QUARTZ_BLOCK_SET.solid);
+			smoothQuartzPool.wall(Externsion.SMOOTH_QUARTZ_BLOCK_SET.wall);
 		}
 
 		@Override
@@ -186,7 +195,17 @@ public class ExternsionDataGenerator implements DataGeneratorEntrypoint {
 					.add(Externsion.STONE_BLOCK_SET.wall)
 					.add(Externsion.KILN_BLOCK);
 			getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.WALLS)
-					.add(Externsion.STONE_BLOCK_SET.wall);
+					.add(Externsion.STONE_BLOCK_SET.wall)
+					.add(Externsion.SMOOTH_STONE_BLOCK_SET.wall)
+					.add(Externsion.QUARTZ_BLOCK_SET.wall)
+					.add(Externsion.QUARTZ_BRICKS_BLOCK_SET.wall)
+					.add(Externsion.SMOOTH_QUARTZ_BLOCK_SET.wall);
+			getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.STAIRS)
+					.add(Externsion.SMOOTH_STONE_BLOCK_SET.stairs)
+					.add(Externsion.QUARTZ_BLOCK_SET.stairs)
+					.add(Externsion.QUARTZ_BRICKS_BLOCK_SET.stairs);
+			getOrCreateTagBuilder(net.minecraft.registry.tag.BlockTags.SLABS)
+					.add(Externsion.QUARTZ_BRICKS_BLOCK_SET.slab);
 		}
 	}
 }
