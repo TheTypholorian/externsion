@@ -1,6 +1,7 @@
 package net.typho.externsion;
 
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
@@ -14,8 +15,12 @@ import net.minecraft.item.ItemGroups;
 import net.minecraft.recipe.book.RecipeBookCategory;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.server.command.CommandManager;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -153,6 +158,53 @@ public class Externsion implements ModInitializer {
 			.setSign(Blocks.CHERRY_SIGN)
 			.setWallSign(Blocks.CHERRY_WALL_SIGN);
 
+	public static final BlockSet BAMBOO_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, new Identifier("bamboo"))
+			.setSolid(Blocks.BAMBOO_PLANKS)
+			.setChiseled(block("chiseled_bamboo_planks", new Block(FabricBlockSettings.copy(Blocks.BAMBOO_PLANKS))))
+			.setStairs(Blocks.BAMBOO_STAIRS)
+			.setSlab(Blocks.BAMBOO_SLAB)
+			.setFence(Blocks.BAMBOO_FENCE)
+			.setFenceGate(Blocks.BAMBOO_FENCE_GATE)
+			.setDoor(Blocks.BAMBOO_DOOR)
+			.setTrapdoor(Blocks.BAMBOO_TRAPDOOR)
+			.setPressurePlate(Blocks.BAMBOO_PRESSURE_PLATE)
+			.setButton(Blocks.BAMBOO_BUTTON)
+			.setSign(Blocks.BAMBOO_SIGN)
+			.setWallSign(Blocks.BAMBOO_WALL_SIGN);
+
+	public static final BlockSet BAMBOO_MOSAIC_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, new Identifier("bamboo_mosaic"))
+			.setSolid(Blocks.BAMBOO_MOSAIC)
+			.setStairs(Blocks.BAMBOO_MOSAIC_STAIRS)
+			.setSlab(Blocks.BAMBOO_MOSAIC_SLAB);
+
+	public static final BlockSet CRIMSON_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, new Identifier("crimson"))
+			.setSolid(Blocks.CRIMSON_PLANKS)
+			.setChiseled(block("chiseled_crimson_planks", new Block(FabricBlockSettings.copy(Blocks.CRIMSON_PLANKS))))
+			.setStairs(Blocks.CRIMSON_STAIRS)
+			.setSlab(Blocks.CRIMSON_SLAB)
+			.setFence(Blocks.CRIMSON_FENCE)
+			.setFenceGate(Blocks.CRIMSON_FENCE_GATE)
+			.setDoor(Blocks.CRIMSON_DOOR)
+			.setTrapdoor(Blocks.CRIMSON_TRAPDOOR)
+			.setPressurePlate(Blocks.CRIMSON_PRESSURE_PLATE)
+			.setButton(Blocks.CRIMSON_BUTTON)
+			.setSign(Blocks.CRIMSON_SIGN)
+			.setWallSign(Blocks.CRIMSON_WALL_SIGN);
+
+	public static final BlockSet WARPED_BLOCK_SET = new BlockSet(BlockSet.Type.WOOD, new Identifier("warped"))
+			.setSolid(Blocks.WARPED_PLANKS)
+			.setChiseled(block("chiseled_warped_planks", new Block(FabricBlockSettings.copy(Blocks.WARPED_PLANKS))))
+			.setStairs(Blocks.WARPED_STAIRS)
+			.setSlab(Blocks.WARPED_SLAB)
+			.setFence(Blocks.WARPED_FENCE)
+			.setFenceGate(Blocks.WARPED_FENCE_GATE)
+			.setDoor(Blocks.WARPED_DOOR)
+			.setTrapdoor(Blocks.WARPED_TRAPDOOR)
+			.setPressurePlate(Blocks.WARPED_PRESSURE_PLATE)
+			.setButton(Blocks.WARPED_BUTTON)
+			.setSign(Blocks.WARPED_SIGN)
+			.setWallSign(Blocks.WARPED_WALL_SIGN);
+
 	public static final BlockSet COBBLESTONE_BLOCK_SET = new BlockSet(BlockSet.Type.ROCKS, new Identifier("cobblestone"))
 			.setSolid(Blocks.COBBLESTONE)
 			.setStairs(Blocks.COBBLESTONE_STAIRS)
@@ -205,6 +257,9 @@ public class Externsion implements ModInitializer {
 					entries.addAfter(DARK_OAK_BLOCK_SET.solid.asItem(), DARK_OAK_BLOCK_SET.chiseled);
 					entries.addAfter(MANGROVE_BLOCK_SET.solid.asItem(), MANGROVE_BLOCK_SET.chiseled);
 					entries.addAfter(CHERRY_BLOCK_SET.solid.asItem(), CHERRY_BLOCK_SET.chiseled);
+					entries.addAfter(BAMBOO_BLOCK_SET.solid.asItem(), BAMBOO_BLOCK_SET.chiseled);
+					entries.addAfter(CRIMSON_BLOCK_SET.solid.asItem(), CRIMSON_BLOCK_SET.chiseled);
+					entries.addAfter(WARPED_BLOCK_SET.solid.asItem(), WARPED_BLOCK_SET.chiseled);
 					entries.addAfter(STONE_BLOCK_SET.slab.asItem(), STONE_BLOCK_SET.wall);
 					entries.addAfter(QUARTZ_BLOCK_SET.slab.asItem(), QUARTZ_BLOCK_SET.wall);
 					entries.addAfter(QUARTZ_BRICKS_BLOCK_SET.solid.asItem(), QUARTZ_BRICKS_BLOCK_SET.stairs, QUARTZ_BRICKS_BLOCK_SET.slab, QUARTZ_BRICKS_BLOCK_SET.wall);
@@ -212,5 +267,28 @@ public class Externsion implements ModInitializer {
 				});
 		HandledScreens.register(KilnBlock.SCREEN_HANDLER_TYPE, KilnBlock.Screen::new);
 		LOGGER.info(Arrays.toString(RecipeBookCategory.values()));
+		CommandRegistrationCallback.EVENT.register(
+				(dispatcher, dedicated, environment) -> dispatcher.register(
+                        CommandManager.literal("placeblocksets")
+                                .requires(serverSource -> serverSource.hasPermissionLevel(2))
+                                .executes(ctx -> {
+                                    Vec3d srcPos = ctx.getSource().getPosition();
+                                    BlockPos.Mutable place = new BlockPos.Mutable(srcPos.x, srcPos.y, srcPos.z);
+
+                                    for (BlockSet.Type type : BlockSet.Type.values()) {
+                                        for (BlockSet set : type.map.values()) {
+                                            if (!set.place(ctx.getSource().getWorld(), place)) {
+												return 0;
+											}
+
+											place.setZ(place.getZ() + 1);
+											place.setX(MathHelper.floor(srcPos.x));
+                                        }
+                                    }
+
+                                    return 1;
+                                })
+                )
+		);
 	}
 }

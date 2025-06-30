@@ -1,7 +1,10 @@
 package net.typho.externsion;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -21,6 +24,76 @@ public class BlockSet {
         this.type = type;
         this.id = id;
         type.map.put(id, this);
+    }
+
+    protected boolean place(World world, BlockPos.Mutable pos, Block block) {
+        if (block != null) {
+            if (world.getBlockState(pos).getBlock() != Blocks.AIR) {
+                return false;
+            }
+
+            world.setBlockState(pos, block.getDefaultState());
+        }
+
+        pos.setX(pos.getX() + 1);
+
+        return true;
+    }
+
+    public boolean place(World world, BlockPos.Mutable pos) {
+        if (!place(world, pos, solid)) {
+            return false;
+        }
+
+        if (!place(world, pos, chiseled)) {
+            return false;
+        }
+
+        if (!place(world, pos, pillar)) {
+            return false;
+        }
+
+        if (!place(world, pos, stairs)) {
+            return false;
+        }
+
+        if (!place(world, pos, slab)) {
+            return false;
+        }
+
+        if (!place(world, pos, button)) {
+            return false;
+        }
+
+        if (!place(world, pos, pressurePlate)) {
+            return false;
+        }
+
+        if (!place(world, pos, fence)) {
+            return false;
+        }
+
+        if (!place(world, pos, fenceGate)) {
+            return false;
+        }
+
+        if (!place(world, pos, sign)) {
+            return false;
+        }
+
+        if (!place(world, pos, wallSign)) {
+            return false;
+        }
+
+        if (!place(world, pos, wall)) {
+            return false;
+        }
+
+        if (!place(world, pos, door)) {
+            return false;
+        }
+
+        return place(world, pos, trapdoor);
     }
 
     public BlockSet setSolid(Block solid) {
