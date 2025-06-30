@@ -1,3 +1,15 @@
 {
-  "block.externsion.chiseled_oak_planks": "Chiseled Oak Planks"
+  "block.externsion.chiseled_oak_planks": "Chiseled Oak Planks",
+  "block.externsion.chiseled_spruce_planks": "Chiseled Spruce Planks",
+  "block.externsion.chiseled_birch_planks": "Chiseled Birch Planks",
+  "block.externsion.chiseled_jungle_planks": "Chiseled Jungle Planks",
+  "block.externsion.chiseled_acacia_planks": "Chiseled Acacia Planks",
+  "block.externsion.chiseled_dark_oak_planks": "Chiseled Dark Oak Planks",
+  "block.externsion.chiseled_mangrove_planks": "Chiseled Mangrove Planks",
+  "block.externsion.chiseled_cherry_planks": "Chiseled Cherry Planks",
+  "block.externsion.stone_wall": "Stone Wall",
+  "block.externsion.kiln": "Kiln",
+  "container.externsion.kiln": "Kiln",
+  "stat.externsion.interact_with_kiln": "Interact with Kiln",
+  "gui.externsion.recipebook.toggleRecipes.fireable": "Fireable"
 }

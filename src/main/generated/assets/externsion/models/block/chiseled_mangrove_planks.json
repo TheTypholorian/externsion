@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "externsion:block/chiseled_mangrove_planks"
+  }
+}
